@@ -16,18 +16,35 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.gajah.inkcase.demo.DemoActivity"
+            android:name="com.gajah.inkcase.demo.SendActivity"
             android:label="@string/app_name" >
+
+            <!--
+                 <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+
+        <meta-data
+            android:name="com.inkcase.DevKey"
+            android:value="INSERT-YOUR-DEV-KEY" />
+
+        <activity
+            android:name="com.gajah.inkcase.demo.MainActivity"
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.inkcase.DevKey"
-            android:value="INSERT-YOUR-DEV-KEY" />
+        <activity
+            android:name="com.gajah.inkcase.demo.ImitateReaderActivity"
+            android:label="@string/title_activity_imitate_reader" >
+        </activity>
     </application>
 
 </manifest>

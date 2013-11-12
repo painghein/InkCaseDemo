@@ -16,10 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.gajah.inkcase.demo.utils.Util;
 import com.gajah.inkcaseLib.InkCase;
 import com.gajah.inkcaseLib.InkCaseUtils;
 
-public class DemoActivity extends Activity implements OnClickListener {
+public class SendActivity extends Activity implements OnClickListener {
 
 	ImageView imgToSend;
 	Button btnSend;
@@ -27,11 +28,10 @@ public class DemoActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_demo);
+		setContentView(R.layout.activity_send);
 
 		imgToSend = (ImageView) findViewById(R.id.imgPicToSend);
 		btnSend = (Button) findViewById(R.id.btnSend);
-
 		btnSend.setOnClickListener(this);
 
 	}
@@ -45,11 +45,11 @@ public class DemoActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v == btnSend) {
-			sendToInkCase();
+			Util.sendPhotoToInkCase(this, Uri.fromFile(new File(getExternalCacheDir(),Util.welcomeName)));
+//			sendToInkCase();
 		}
 
 	}
-
 	private void sendToInkCase() {
 		imgToSend.setDrawingCacheEnabled(true);
 		Bitmap b = imgToSend.getDrawingCache();
@@ -86,5 +86,5 @@ public class DemoActivity extends Activity implements OnClickListener {
 
 		}
 	}
-
+	
 }
