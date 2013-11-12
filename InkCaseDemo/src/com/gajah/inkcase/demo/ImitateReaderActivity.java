@@ -42,6 +42,8 @@ public class ImitateReaderActivity extends Activity {
 	}
 
 	public void onSendFirstPageBtnClicked(View view) {
+		
+		//first time requestIndex must put into "no"
 		Util.sendPageToInkCase(ImitateReaderActivity.this,
 				Uri.fromFile(new File(getExternalCacheDir(), Util.page1Name)),
 				"book", "1", "no");
@@ -78,9 +80,7 @@ public class ImitateReaderActivity extends Activity {
 			case InkCase.CODE_REQUEST_DATA:
 				//handle InkCase request page
 				msg = "\n" + "request " + requestDirection;
-
 				int sendPagePos = 1;
-				Log.e(TAG, "curPagePos:" + curPagePos);
 				if (requestDirection.equals("previous")) {
 					sendPagePos = (curPagePos - 1 + 3) % 3;
 				} else if (requestDirection.equals("next")) {
