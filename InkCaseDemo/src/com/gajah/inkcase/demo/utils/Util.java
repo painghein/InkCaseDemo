@@ -41,13 +41,18 @@ public class Util {
 		File page1File = new File(context.getExternalCacheDir(), page1Name);
 		File page2File = new File(context.getExternalCacheDir(), page2Name);
 
-		copyPhoto(context, welcomeFile, R.drawable.welcome);
-		copyPhoto(context, page0File, R.drawable.page0);
-		copyPhoto(context, page1File, R.drawable.page1);
-		copyPhoto(context, page2File, R.drawable.page2);
+		try{
+			copyPhoto(context, welcomeFile, R.drawable.welcome);
+			copyPhoto(context, page0File, R.drawable.page0);
+			copyPhoto(context, page1File, R.drawable.page1);
+			copyPhoto(context, page2File, R.drawable.page2);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+
 	}
 
-	public static void copyPhoto(Context context, File outPath, int resId) {
+	public static void copyPhoto(Context context, File outPath, int resId) throws IOException {
 		if (outPath.exists())
 			return;
 
@@ -63,6 +68,8 @@ public class Util {
 		try {
 			FileOutputStream fOut = new FileOutputStream(outPath);
 			bitmap.compress(CompressFormat.JPEG, 60, fOut);
+			fOut.flush();
+			fOut.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
