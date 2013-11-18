@@ -13,8 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,18 +32,10 @@ public class ImitateReaderActivity extends Activity {
 		registerReceiver(keyEventReceiver, intent);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.imitate_reader, menu);
-		return true;
-	}
-
 	public void onSendFirstPageBtnClicked(View view) {
-		
-		//first time requestIndex must put into "no"
-		Util.sendPageToInkCase(ImitateReaderActivity.this,
-				Uri.fromFile(new File(getExternalCacheDir(), Util.page1Name)),
+
+		// first time requestIndex must put into "no"
+		Util.sendPageToInkCase(ImitateReaderActivity.this, getImageUri(1),
 				"book", "1", "no");
 	}
 
@@ -68,7 +58,7 @@ public class ImitateReaderActivity extends Activity {
 	BroadcastReceiver keyEventReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String msg="";
+			// String msg="";
 			int keyCode = intent.getIntExtra(InkCase.EXTRA_KEYCODE,
 					InkCase.KEYCODE_POWER);
 			String requestDirection = intent
@@ -77,42 +67,93 @@ public class ImitateReaderActivity extends Activity {
 					.getStringExtra(InkCase.EXTRA_CURRENT_PAGE_POS));
 
 			switch (keyCode) {
+			// handle InkCase request page
 			case InkCase.CODE_REQUEST_DATA:
-				//handle InkCase request page
-				msg = "\n" + "request " + requestDirection;
-				int sendPagePos = 1;
-				if (requestDirection.equals("previous")) {
-					sendPagePos = (curPagePos - 1 + 3) % 3;
-				} else if (requestDirection.equals("next")) {
-					sendPagePos = (curPagePos + 1) % 3;
-				}
-				String fileName = Util.page1Name;
-				if (sendPagePos == 0) {
-					fileName = Util.page0Name;
-				} else if (sendPagePos == 2) {
-					fileName = Util.page2Name;
-				}
+				// msg = "\n" + "request " + requestDirection;
+				int sendPagePos = curPagePos;
+				String requestIndex = requestDirection;
 
-				Util.sendPageToInkCase(
-						ImitateReaderActivity.this,
-						Uri.fromFile(new File(getExternalCacheDir(), fileName)),
-						"book", sendPagePos + "", requestDirection);
+				Uri imageUri = null;
+				if (requestDirection.equals(IndexType.previous)) {
+					if (sendPagePos == 0)// first page,just put
+											// "previous_finish" inside and
+											// reply InkCase
+						requestIndex = IndexType.previous_finish;
+					else {
+						sendPagePos--;
+						requestIndex = IndexType.previous;
+					}
+
+				} else if (requestDirection.equals(IndexType.next)) {
+					if (sendPagePos == 8)// first page,just put "next_finish"
+											// inside and reply InkCase
+						requestIndex = IndexType.next_finish;
+					else {
+						sendPagePos++;
+						requestIndex = IndexType.next;
+					}
+				}
+				imageUri = getImageUri(sendPagePos);
+				Util.sendPageToInkCase(ImitateReaderActivity.this, imageUri,
+						"book", sendPagePos + "", requestIndex);
 				break;
-				
-			case InkCase.KEYCODE_LEFT:
-				//do nothing
-				Log.d(TAG, "left key clicked");
-				msg ="\n" + "left key clicked";
-				break;
-			case InkCase.KEYCODE_RIGHT:
-				//do nothing
-				Log.d(TAG, "right key clicked");
-				msg ="\n" + "right key clicked";
-				break;
+
+			// case InkCase.KEYCODE_LEFT:
+			// //do nothing
+			// Log.d(TAG, "left key clicked");
+			// msg ="\n" + "left key clicked";
+			// break;
+			// case InkCase.KEYCODE_RIGHT:
+			// //do nothing
+			// Log.d(TAG, "right key clicked");
+			// msg ="\n" + "right key clicked";
+			// break;
 			}
-			resultTV.append(msg);
-			
+			// resultTV.append(msg);
+
 		}
 	};
+
+	private Uri getImageUri(int index) {
+		String fileName;
+		switch (index) {
+		case 0:
+			fileName = Util.page0Name;
+			break;
+		case 2:
+			fileName = Util.page2Name;
+			break;
+		case 3:
+			fileName = Util.page3Name;
+			break;
+		case 4:
+			fileName = Util.page4Name;
+			break;
+		case 5:
+			fileName = Util.page5Name;
+			break;
+		case 6:
+			fileName = Util.page6Name;
+			break;
+		case 7:
+			fileName = Util.page7Name;
+			break;
+		case 8:
+			fileName = Util.page8Name;
+			break;
+		default:
+			fileName = Util.page1Name;
+		}
+		return Uri.fromFile(new File(getExternalCacheDir(), fileName));
+
+	}
+
+	private class IndexType {
+		// reader request index
+		public final static String previous = "previous";
+		public final static String next = "next";
+		public final static String previous_finish = "previous_finish";
+		public final static String next_finish = "next_finish";
+	}
 
 }

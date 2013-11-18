@@ -24,7 +24,12 @@ public class Util {
 	public static final String page0Name = "page0.jpg";
 	public static final String page1Name = "page1.jpg";
 	public static final String page2Name = "page2.jpg";
-
+	public static final String page3Name = "page3.jpg";
+	public static final String page4Name = "page4.jpg";
+	public static final String page5Name = "page5.jpg";
+	public static final String page6Name = "page6.jpg";
+	public static final String page7Name = "page7.jpg";
+	public static final String page8Name = "page8.jpg";
 	/**
 	 * scale to 720*960 maybe better display
 	 * @param src
@@ -40,12 +45,25 @@ public class Util {
 		File page0File = new File(context.getExternalCacheDir(), page0Name);
 		File page1File = new File(context.getExternalCacheDir(), page1Name);
 		File page2File = new File(context.getExternalCacheDir(), page2Name);
+		File page3File = new File(context.getExternalCacheDir(), page3Name);
+		File page4File = new File(context.getExternalCacheDir(), page4Name);
+		File page5File = new File(context.getExternalCacheDir(), page5Name);
+		File page6File = new File(context.getExternalCacheDir(), page6Name);
+		File page7File = new File(context.getExternalCacheDir(), page7Name);
+		File page8File = new File(context.getExternalCacheDir(), page8Name);
 
 		try{
 			copyPhoto(context, welcomeFile, R.drawable.welcome);
 			copyPhoto(context, page0File, R.drawable.page0);
 			copyPhoto(context, page1File, R.drawable.page1);
 			copyPhoto(context, page2File, R.drawable.page2);
+			copyPhoto(context, page3File, R.drawable.page3);
+			copyPhoto(context, page4File, R.drawable.page4);
+			copyPhoto(context, page5File, R.drawable.page5);
+			copyPhoto(context, page6File, R.drawable.page6);
+			copyPhoto(context, page7File, R.drawable.page7);
+			copyPhoto(context, page8File, R.drawable.page8);
+			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
