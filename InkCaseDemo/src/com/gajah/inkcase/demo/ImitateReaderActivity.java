@@ -36,7 +36,7 @@ public class ImitateReaderActivity extends Activity {
 
 		// first time requestIndex must put into "no"
 		Util.sendPageToInkCase(ImitateReaderActivity.this, getImageUri(1),
-				"book", "1", "no");
+				"book", "1", IndexType.no);
 	}
 
 	// public void onPreviousBtnClicked(View view) {
@@ -85,7 +85,7 @@ public class ImitateReaderActivity extends Activity {
 					}
 
 				} else if (requestDirection.equals(IndexType.next)) {
-					if (sendPagePos == 8)// first page,just put "next_finish"
+					if (sendPagePos == 8)// last page,just put "next_finish"
 											// inside and reply InkCase
 						requestIndex = IndexType.next_finish;
 					else {
@@ -148,9 +148,10 @@ public class ImitateReaderActivity extends Activity {
 
 	}
 
+	// reader request index
 	private class IndexType {
-		// reader request index
-		public final static String previous = "previous";
+		public final static String no = "no";//use for first send 
+		public final static String previous = "previous"; 
 		public final static String next = "next";
 		public final static String previous_finish = "previous_finish";
 		public final static String next_finish = "next_finish";

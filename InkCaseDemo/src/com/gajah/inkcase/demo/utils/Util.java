@@ -30,6 +30,7 @@ public class Util {
 	public static final String page6Name = "page6.jpg";
 	public static final String page7Name = "page7.jpg";
 	public static final String page8Name = "page8.jpg";
+	
 	/**
 	 * scale to 720*960 maybe better display
 	 * @param src
@@ -63,7 +64,6 @@ public class Util {
 			copyPhoto(context, page6File, R.drawable.page6);
 			copyPhoto(context, page7File, R.drawable.page7);
 			copyPhoto(context, page8File, R.drawable.page8);
-			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -99,7 +99,7 @@ public class Util {
 	 * just send photo to InkCase
 	 * 
 	 * @param context
-	 * @param imageUri
+	 * @param imageUri can not be null
 	 */
 	public static void sendPhotoToInkCase(Context context, Uri imageUri) {
 		if (imageUri == null) {
@@ -128,7 +128,7 @@ public class Util {
 	 * Reader send page(photo) to InkCase
 	 * 
 	 * @param context
-	 * @param imageUri
+	 * @param imageUri can not be null
 	 * @param bookTitle
 	 * @param pagePosition
 	 *            page position in book,converted into a String
